@@ -4,11 +4,10 @@ declare(strict_types=1);
 namespace Yireo\ExampleDealersAdminhtml\Model\Dealer;
 
 use Magento\Ui\DataProvider\ModifierPoolDataProvider;
-use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Ui\DataProvider\Modifier\PoolInterface;
-use Yireo\ExampleDealers\Api\Data\DealerInterface;
-use Yireo\ExampleDealers\Model\ResourceModel\Dealer\Collection;
-use Yireo\ExampleDealers\Model\ResourceModel\Dealer\CollectionFactory;
+use Magento\Framework\App\Request\DataPersistorInterface;
+use Yireo\ExampleDealers\Api\Data\DealerCollectionInterface;
+use Yireo\ExampleDealers\Api\Data\DealerCollectionInterfaceFactory;
 
 /**
  * Class DataProvider
@@ -16,7 +15,7 @@ use Yireo\ExampleDealers\Model\ResourceModel\Dealer\CollectionFactory;
 class DataProvider extends ModifierPoolDataProvider
 {
     /**
-     * @var Collection
+     * @var DealerCollectionInterface
      */
     protected $collection;
 
@@ -36,7 +35,7 @@ class DataProvider extends ModifierPoolDataProvider
      * @param string $name
      * @param string $primaryFieldName
      * @param string $requestFieldName
-     * @param CollectionFactory $collectionFactory
+     * @param DealerCollectionInterfaceFactory $collectionFactory
      * @param DataPersistorInterface $dataPersistor
      * @param array $meta
      * @param array $data
@@ -46,7 +45,7 @@ class DataProvider extends ModifierPoolDataProvider
         $name,
         $primaryFieldName,
         $requestFieldName,
-        CollectionFactory $collectionFactory,
+        DealerCollectionInterfaceFactory $collectionFactory,
         DataPersistorInterface $dataPersistor,
         array $meta = [],
         array $data = [],
@@ -68,7 +67,6 @@ class DataProvider extends ModifierPoolDataProvider
             return $this->loadedData;
         }
         $items = $this->collection->getItems();
-        /** @var DealerInterface $dealer */
         foreach ($items as $dealer) {
             $this->loadedData[$dealer->getId()] = $dealer->getData();
         }

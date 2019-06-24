@@ -5,13 +5,11 @@ namespace Yireo\ExampleDealersAdminhtml\Controller\Adminhtml\Dealer;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
-use Magento\Backend\Model\View\Result\Page;
 use Magento\Backend\Model\View\Result\RedirectFactory;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\Message\Manager;
-use Magento\Framework\View\Result\PageFactory;
 use Yireo\ExampleDealers\Api\DealerRepositoryInterface;
 
 /**
@@ -25,10 +23,12 @@ class Save extends Action
      * @var RedirectFactory
      */
     private $redirectFactory;
+
     /**
      * @var DealerRepositoryInterface
      */
     private $dealerRepository;
+
     /**
      * @var RequestInterface
      */
