@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">dealers_grid.dealers_grid_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="add">
+                <url path="*/dealer/create"/>
+                <class>primary</class>
+                <label translate="true">Add New Dealer</label>
+            </button>
+        </buttons>
+        <spinner>dealers_grid_columns</spinner>
+        <deps>
+            <dep>dealers_grid.dealers_grid_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="dealers_grid_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">dealer_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Yireo_ExampleDealersAdminhtml::dealers</aclResource>
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="dealers_grid_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filterSearch name="fulltext"/>
+        <filters name="listing_filters">
+            <argument name="data" xsi:type="array">
+                <item name="observers" xsi:type="array">
+                    <item name="column" xsi:type="string">column</item>
+                </item>
+            </argument>
+            <settings>
+                <templates>
+                    <filters>
+                        <select>
+                            <param name="template" xsi:type="string">ui/grid/filters/elements/ui-select</param>
+                            <param name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</param>
+                        </select>
+                    </filters>
+                </templates>
+            </settings>
+        </filters>
+        <massaction name="listing_massaction">
+            <action name="delete">
+                <settings>
+                    <confirm>
+                        <message translate="true">Are you sure you want to delete selected items?</message>
+                        <title translate="true">Delete items</title>
+                    </confirm>
+                    <url path="dealers/dealer/massDelete"/>
+                    <type>delete</type>
+                    <label translate="true">Delete</label>
+                </settings>
+            </action>
+            <action name="edit">
+                <settings>
+                    <callback>
+                        <target>editSelected</target>
+                        <provider>dealers_grid.dealers_grid.dealers_grid_columns_editor</provider>
+                    </callback>
+                    <type>edit</type>
+                    <label translate="true">Edit</label>
+                </settings>
+            </action>
+        </massaction>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="dealers_grid_columns">
+        <selectionsColumn name="ids">
+            <settings>
+                <indexField>id</indexField>
+                <resizeEnabled>false</resizeEnabled>
+                <resizeDefaultWidth>55</resizeDefaultWidth>
+            </settings>
+        </selectionsColumn>
+        <column name="id">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="name">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Name</label>
+            </settings>
+        </column>
+        <column name="address">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Address</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Yireo\ExampleDealersAdminhtml\Ui\Component\Listing\Column\DealerActions">
+            <settings>
+                <indexField>id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

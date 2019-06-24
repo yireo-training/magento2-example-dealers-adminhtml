@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Yireo_ExampleDealersAdminhtml::index" title="Dealers" translate="title" module="Yireo_ExampleDealersAdminhtml" sortOrder="10" parent="Magento_Backend::content" resource="Yireo_ExampleDealersAdminhtml::index"/>
+        <add id="Yireo_ExampleDealersAdminhtml::dealers" title="Dealers Overview" translate="title" module="Yireo_ExampleDealersAdminhtml" sortOrder="99" parent="Yireo_ExampleDealersAdminhtml::index" action="dealers/index" resource="Yireo_ExampleDealersAdminhtml::dealers"/>
+    </menu>
+</config>
