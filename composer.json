@@ -1,0 +1,38 @@
+{
+  "name": "yireo-training/magento2-example-dealers-adminhtml",
+  "type": "magento2-module",
+  "version": "0.0.1",
+  "license": "OSL-3.0",
+  "description": "Magento 2 module adding backend pages to the dealers module",
+  "keywords": [
+    "composer-installer",
+    "magento"
+  ],
+  "authors": [
+    {
+      "name": "Jisse Reitsma (Yireo)",
+      "email": "jisse@yireo.com"
+    }
+  ],
+  "require": {
+    "magento/framework": "^101.0|^102.0",
+    "psr/log": "^1.1",
+    "php": ">=7.0.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*",
+    "composer/composer": "*@dev"
+  },
+  "suggest": {
+    "yireo/magento2-example-dealers-storefront": "*",
+    "yireo/magento2-example-dealers-cli": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Yireo\\ExampleDealersAdminhtml\\": ""
+    },
+    "files": [
+      "registration.php"
+    ]
+  }
+}
