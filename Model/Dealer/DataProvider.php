@@ -66,6 +66,7 @@ class DataProvider extends ModifierPoolDataProvider
         if (isset($this->loadedData)) {
             return $this->loadedData;
         }
+
         $items = $this->collection->getItems();
         foreach ($items as $dealer) {
             $this->loadedData[$dealer->getId()] = $dealer->getData();

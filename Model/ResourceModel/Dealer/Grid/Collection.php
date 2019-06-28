@@ -7,37 +7,61 @@ use Magento\Framework\Api\ExtensibleDataInterface;
 use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\Api\Search\AggregationInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
-use Magento\Framework\Data\Collection as DataCollection;
+use Magento\Framework\Data\Collection\Db\FetchStrategyInterface;
+use Magento\Framework\Data\Collection\EntityFactoryInterface;
+use Magento\Framework\DB\Adapter\AdapterInterface;
+use Magento\Framework\Event\ManagerInterface;
+use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\View\Element\UiComponent\DataProvider\Document;
+use Psr\Log\LoggerInterface;
 use Yireo\ExampleDealers\Api\Data\DealerInterface;
 use Yireo\ExampleDealers\Api\Data\DealerCollectionInterface as OriginalCollection;
+use Yireo\ExampleDealers\Model\ResourceModel\Dealer\Collection as ParentCollection;
 
 /**
  * Class Collection
  * Collection for displaying grid of sales documents
  */
-class Collection extends DataCollection implements SearchResultInterface
+class Collection extends ParentCollection implements SearchResultInterface
 {
-    /**
-     * @var OriginalCollection
-     */
-    private $originalCollection;
-
     /**
      * @var AggregationInterface
      */
     protected $aggregations;
 
     /**
+     * @var SearchCriteriaInterface
+     */
+    protected $searchCriteria;
+
+    /**
      * Collection constructor.
-     * @param OriginalCollection $originalCollection
+     * @param EntityFactoryInterface $entityFactory
+     * @param LoggerInterface $logger
+     * @param FetchStrategyInterface $fetchStrategy
+     * @param ManagerInterface $eventManager
+     * @param Document $model
+     * @param AdapterInterface|null $connection
+     * @param AbstractDb|null $resource
      */
     public function __construct(
-        OriginalCollection $originalCollection,
-        Document $model
+        EntityFactoryInterface $entityFactory,
+        LoggerInterface $logger,
+        FetchStrategyInterface $fetchStrategy,
+        ManagerInterface $eventManager,
+        $mainTable,
+        $eventPrefix,
+        $eventObject,
+        $resourceModel,
+        $model = Document::class,
+        AdapterInterface $connection = null,
+        AbstractDb $resource = null
     ) {
-        $this->originalCollection = $originalCollection;
-        $this->originalCollection->setModel(get_class($model));
+        parent::__construct($entityFactory, $logger, $fetchStrategy, $eventManager, $connection, $resource);
+        $this->_eventPrefix = $eventPrefix;
+        $this->_eventObject = $eventObject;
+        $this->_init($model, $resourceModel);
+        $this->setMainTable($mainTable);
     }
 
     /**
@@ -65,7 +89,7 @@ class Collection extends DataCollection implements SearchResultInterface
      */
     public function getSearchCriteria()
     {
-        return null;
+        return $this->searchCriteria;
     }
 
     /**
@@ -77,6 +101,7 @@ class Collection extends DataCollection implements SearchResultInterface
      */
     public function setSearchCriteria(SearchCriteriaInterface $searchCriteria = null)
     {
+        $this->searchCriteria = $searchCriteria;
         return $this;
     }
 
@@ -87,7 +112,7 @@ class Collection extends DataCollection implements SearchResultInterface
      */
     public function getTotalCount()
     {
-        return $this->originalCollection->getSize();
+        return $this->getSize();
     }
 
     /**
@@ -111,14 +136,7 @@ class Collection extends DataCollection implements SearchResultInterface
      */
     public function setItems(array $items = null)
     {
+        $this->_items = $items;
         return $this;
-    }
-
-    /**
-     * @return DealerInterface[]
-     */
-    public function getItems()
-    {
-        return $this->originalCollection->getItems();
     }
 }
