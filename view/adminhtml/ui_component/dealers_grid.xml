@@ -103,6 +103,12 @@
                 <label translate="true">Name</label>
             </settings>
         </column>
+        <column name="url_key">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">URL Key</label>
+            </settings>
+        </column>
         <column name="address">
             <settings>
                 <filter>text</filter>

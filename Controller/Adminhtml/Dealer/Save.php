@@ -63,12 +63,14 @@ class Save extends Action
     {
         $id = (int)$this->request->getParam('id');
         $name = (string)$this->request->getParam('name');
+        $urlKey = (string)$this->request->getParam('url_key');
         $address = (string)$this->request->getParam('address');
         $description = (string)$this->request->getParam('description');
 
         if ($this->isValidEntityId($id)) {
             $dealer = $this->dealerRepository->getById($id);
             $dealer->setName($name);
+            $dealer->setUrlKey($urlKey);
             $dealer->setAddress($address);
             $dealer->setDescription($description);
             $this->dealerRepository->save($dealer);
