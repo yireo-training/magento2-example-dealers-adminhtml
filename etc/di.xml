@@ -1,19 +1,17 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Yireo\ExampleDealers\Ui\DataProvider\SearchResult" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">example_dealers</argument>
+            <argument name="resourceModel" xsi:type="string">Yireo\ExampleDealers\Model\ResourceModel\Dealer\Collection</argument>
+        </arguments>
+    </virtualType>
+
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
-                <item name="dealers_grid_data_source" xsi:type="string">Yireo\ExampleDealersAdminhtml\Model\ResourceModel\Dealer\Grid\Collection</item>
+                <item name="dealers_grid_data_source" xsi:type="string">Yireo\ExampleDealers\Ui\DataProvider\SearchResult</item>
             </argument>
-        </arguments>
-    </type>
-
-    <type name="Yireo\ExampleDealersAdminhtml\Model\ResourceModel\Dealer\Grid\Collection">
-        <arguments>
-            <argument name="mainTable" xsi:type="string">example_dealers</argument>
-            <argument name="resourceModel" xsi:type="string">Yireo\ExampleDealers\Model\ResourceModel\Dealer</argument>
-            <argument name="eventPrefix" xsi:type="string">example_dealers_grid_collection</argument>
-            <argument name="eventObject" xsi:type="string">example_dealers_collection</argument>
         </arguments>
     </type>
 </config>
